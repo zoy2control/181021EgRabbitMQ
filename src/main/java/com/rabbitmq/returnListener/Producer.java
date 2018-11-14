@@ -35,7 +35,8 @@ public class Producer {
         // ·6、重点来了：设置 returnListener
         channel.addReturnListener(new ReturnListener() {
             @Override
-            public void handleReturn(int replyCode, String replyText, String exchange, String routingKey, AMQP.BasicProperties properties, byte[] body) throws IOException {
+            public void handleReturn(int replyCode, String replyText, String exchange,
+                                     String routingKey, AMQP.BasicProperties properties, byte[] body) throws IOException {
                 System.err.println("============handle return============");
                 System.out.println("replyCode: " + replyCode);
                 System.out.println("replyText: " + replyText);
@@ -49,7 +50,10 @@ public class Producer {
         // ·发送消息
         // ·对于 第三个参数 mandatory，设置为 true，如果 发送的该消息不能路由到指定队列，那么 该消息也不会被~
         // ·删除，如果 生产端设置了 returnListener，那么 消息将会被 生产端的 returnListener监听到
-        channel.basicPublish(exchangeName, routingKey, true, null, msg.getBytes());// ·eq1
-//        channel.basicPublish(exchangeName, routingErrorKey, true, null, msg.getBytes());// ·eq2
+
+        // ·这是一个正常的可路由的消息
+//        channel.basicPublish(exchangeName, routingKey, true, null, msg.getBytes());// ·eq1
+        // ·这是一个 不可路由的消息（routingKey和 消费端routingKey不一样）
+        channel.basicPublish(exchangeName, routingErrorKey, true, null, msg.getBytes());// ·eq2
     }
 }
