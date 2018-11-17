@@ -33,6 +33,7 @@ public class Producer {
         String msg = "hello mq send return message";
 
         // ·6、重点来了：设置 returnListener
+        // ·如果从 生产端发送到 MQ Broker的消息不能路由，那么 该消息将被 生产端“回收”，即 returnListener()
         channel.addReturnListener(new ReturnListener() {
             @Override
             public void handleReturn(int replyCode, String replyText, String exchange,
