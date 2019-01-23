@@ -1,4 +1,4 @@
-package com.rabbitmq.requeue;
+package com.rabbitmq.CH3S7requeue;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
@@ -43,7 +43,7 @@ public class MyConsumer extends DefaultConsumer {
 
         // ·这里 第一条消息会被 拒收，然后 第一条消息重回队列
         if ((Integer)properties.getHeaders().get("num") == 0) {// ·Nack
-            // ·multiple，是否 批量处理；requeue，是否 重回队列
+            // ·multiple，是否 批量处理；CH3S7requeue，是否 重回队列
             channel.basicNack(envelope.getDeliveryTag(), false, true);
         } else {// ·ack
             // ·手工签收。multiple表示是否批量签收，取决于消费端接受多少条数据（限流），非1即批量

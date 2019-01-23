@@ -1,4 +1,4 @@
-package com.rabbitmq.confirm;
+package com.rabbitmq.CH3S3confirm;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

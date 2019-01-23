@@ -1,4 +1,4 @@
-package com.rabbitmq.userDef;
+package com.rabbitmq.CH3S5userDef;
 
 import com.rabbitmq.client.*;
 

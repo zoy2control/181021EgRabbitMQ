@@ -1,9 +1,8 @@
-package com.rabbitmq.returnListener;
+package com.rabbitmq.CH3S5userDef;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.QueueingConsumer;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
@@ -25,24 +24,17 @@ public class Consumer {
         // ·3、通过 Connection创建一个新的 Channel
         Channel channel = connection.createChannel();
 
-        String exchangeName = "test_return_exchange";
-        String routingKey = "test_return_routingKey.*";
-        String queueName = "test_return_queue";
+        String exchangeName = "test_userDef_exchange";
+        String routingKey = "test_userDef_routingKey.*";
+        String queueName = "test_userDef_queue";
 
         // ·4、声明 交换机和 队列，并进行 绑定设置
         channel.exchangeDeclare(exchangeName, "topic", true);
         channel.queueDeclare(queueName, true, false, false, null);
         channel.queueBind(queueName, exchangeName, routingKey);
 
-        // ·5、创建 消费者
-        QueueingConsumer consumer = new QueueingConsumer(channel);
-        channel.basicConsume(queueName, true, consumer);
+        // ·5、创建 自定义消费者
+        channel.basicConsume(queueName, true, new MyConsumer(channel));
 
-        while(true) {
-            QueueingConsumer.Delivery delivery = consumer.nextDelivery();
-            String msg = new String(delivery.getBody());
-
-            System.out.println("消费端收到消息：" + msg);
-        }
     }
 }

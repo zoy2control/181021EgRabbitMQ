@@ -1,4 +1,4 @@
-package com.rabbitmq.confirm;
+package com.rabbitmq.CH3S3confirm;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmListener;
@@ -32,7 +32,7 @@ public class Producer {
         String routingKey = "test_confirm_routingKey.save";
 
         // ·5、发送消息
-        String msg = "hello mq send confirm message";
+        String msg = "hello mq send CH3S3confirm message";
         channel.basicPublish(exchangeName, routingKey,null, msg.getBytes());
 
         // ·6、添加一个确认监听

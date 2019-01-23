@@ -35,7 +35,7 @@ public class Producer {
         AMQP.BasicProperties myProperties = new AMQP.BasicProperties().builder()
                 .deliveryMode(2) // ·消息送达模式，2 表示消息持久化
                 .contentEncoding("UTF-8")
-                .expiration("10000") // ·消息超时时间，5s
+                .expiration("10000") // ·消息超时时间，10s
                 .headers(myHeader)
                 .build();
 

@@ -1,4 +1,4 @@
-package com.rabbitmq.requeue;
+package com.rabbitmq.CH3S7requeue;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

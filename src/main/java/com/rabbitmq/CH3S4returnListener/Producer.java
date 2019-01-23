@@ -1,4 +1,4 @@
-package com.rabbitmq.returnListener;
+package com.rabbitmq.CH3S4returnListener;
 
 import com.rabbitmq.client.*;
 
@@ -32,8 +32,8 @@ public class Producer {
         // ·5、发送消息
         String msg = "hello mq send return message";
 
-        // ·6、重点来了：设置 returnListener
-        // ·如果从 生产端发送到 MQ Broker的消息不能路由，那么 该消息将被 生产端“回收”，即 returnListener()
+        // ·6、重点来了：设置 CH3S4returnListener
+        // ·如果从 生产端发送到 MQ Broker的消息不能路由，那么 该消息将被 生产端“回收”，即 CH3S4returnListener()
         channel.addReturnListener(new ReturnListener() {
             @Override
             public void handleReturn(int replyCode, String replyText, String exchange,
@@ -50,7 +50,7 @@ public class Producer {
 
         // ·发送消息
         // ·对于 第三个参数 mandatory，设置为 true，如果 发送的该消息不能路由到指定队列，那么 该消息也不会被~
-        // ·删除，如果 生产端设置了 returnListener，那么 消息将会被 生产端的 returnListener监听到
+        // ·删除，如果 生产端设置了 CH3S4returnListener，那么 消息将会被 生产端的 returnListener监听到
 
         // ·这是一个正常的可路由的消息
 //        channel.basicPublish(exchangeName, routingKey, true, null, msg.getBytes());// ·eq1

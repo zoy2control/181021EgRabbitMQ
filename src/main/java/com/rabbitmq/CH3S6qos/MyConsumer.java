@@ -1,4 +1,4 @@
-package com.rabbitmq.qos;
+package com.rabbitmq.CH3S6qos;
 
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;

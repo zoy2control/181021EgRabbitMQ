@@ -1,12 +1,10 @@
-package com.rabbitmq.requeue;
+package com.rabbitmq.CH3S6qos;
 
-import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -27,24 +25,13 @@ public class Producer {
         Channel channel = connection.createChannel();
 
 
-        String exchangeName = "test_requeue_exchange";
-        String routingKey = "test_requeue_routingKey.save";
+        String exchangeName = "test_qos_exchange";
+        String routingKey = "test_qos_routingKey.save";
 
         // ·5、发送消息
+        String msg = "hello mq send Qos message";
         for (int i = 0; i < 5; i++) {
-            String msg = "hello mq send Requeue message" + i;
-
-            // ·自定义properties
-            HashMap<String, Object> headers = new HashMap<>();
-            headers.put("num", i);
-
-            AMQP.BasicProperties properties = new AMQP.BasicProperties.Builder()
-                    .deliveryMode(2)
-                    .contentEncoding("UTF-8")
-                    .headers(headers)
-                    .build();
-
-            channel.basicPublish(exchangeName, routingKey, true, properties, msg.getBytes());
+            channel.basicPublish(exchangeName, routingKey, true, null, msg.getBytes());
         }
     }
 }
