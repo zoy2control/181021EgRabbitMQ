@@ -7,6 +7,9 @@ import com.rabbitmq.client.ConnectionFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * ·死信交换机
+ */
 public class Consumer {
 	public static void main(String[] args) throws Exception {
 		ConnectionFactory connectionFactory = new ConnectionFactory();

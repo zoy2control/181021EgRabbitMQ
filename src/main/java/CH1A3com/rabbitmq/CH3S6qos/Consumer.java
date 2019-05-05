@@ -33,11 +33,11 @@ public class Consumer {
         channel.queueDeclare(queueName, true, false, false, null);
         channel.queueBind(queueName, exchangeName, routingKey);
 
-        // ·5、限流方式，第一件事情就是将 autoAck设置为 false。表示 自动签收
+        // ·5、消费端限流，第一件事情就是将 autoAck设置为 false。表示 不进行自动签收
         // ·prefetchCount，表示一次接受多少条消息
         channel.basicQos(0, 1, false);
 
-        // ·6、创建 自定义消费者
+        // ·6、创建 自定义消费者。autoAck为 false
         channel.basicConsume(queueName, false, new MyConsumer(channel));
 
     }

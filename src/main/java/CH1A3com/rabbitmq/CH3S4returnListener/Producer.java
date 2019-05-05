@@ -54,6 +54,7 @@ public class Producer {
 
         // ·这是一个正常的可路由的消息
 //        channel.basicPublish(exchangeName, routingKey, true, null, msg.getBytes());// ·eq1
+
         // ·这是一个 不可路由的消息（routingKey和 消费端routingKey不一样）
         channel.basicPublish(exchangeName, routingErrorKey, true, null, msg.getBytes());// ·eq2
     }

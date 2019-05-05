@@ -19,6 +19,8 @@ import java.util.UUID;
 
 /**
  * ·RabbitMQ配置类
+ * ·其实可以看到，原始的 创建ConnectionFactory、Connection、Channel、声明交换机队列等都以 Bean的
+ * ·形式封装，并注入
  * Created by zoypong on 2019/1/26.
  */
 @Configuration // ·配置Bean
@@ -50,6 +52,7 @@ public class RabbitMqConfig {
      */
     @Bean
     public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        /* ·注意：区别原始的 通过ConnectionFactory创建 Connection，再通过 Connection创建 Channel*/
         RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
         rabbitAdmin.setAutoStartup(true);// ·Spring容器加载的时候，一定要把这个 Bean加载上
         return rabbitAdmin;// ·注入到 Bean容器中
@@ -76,6 +79,7 @@ public class RabbitMqConfig {
 
     @Bean
     public Binding binding001() {
+        /* ·BindingBuilder.bind(queue.to(exchange).with(routingKey))*/
         return BindingBuilder.bind(queue001()).to(exchange001()).with("spring.*");
     }
 
@@ -99,7 +103,7 @@ public class RabbitMqConfig {
         return new Queue("queue003", true); //队列持久
     }
 
-    // ·一个 exchange绑定 两个queue，至于路由到 哪个queue，根据 routingKey指定
+    /* ·一个 exchange绑定 两个queue，至于路由到 哪个queue，根据 routingKey指定*/
     @Bean
     public Binding binding003() {
         return BindingBuilder.bind(queue003()).to(exchange001()).with("mq.*");
@@ -143,16 +147,16 @@ public class RabbitMqConfig {
 
 
     /**
-     * ·SimpleMessageListenerContainer，实例化类
+     * ·SimpleMessageListenerContainer，（消费端）消息监听容器类
      * @param connectionFactory
      * @return
      */
     @Bean
     public SimpleMessageListenerContainer messageContainer(ConnectionFactory connectionFactory) {
 
-        // ·自定义 SimpleMessageListenerContainer
+        // ·自定义 SimpleMessageListenerContainer。消息监听容器类（消费端）
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer(connectionFactory);
-        container.setQueues(queue001(), queue002(), queue003(), queue_image(), queue_pdf()); // ·绑定多个队列
+        container.setQueues(queue001(), queue002(), queue003(), queue_image(), queue_pdf()); // ·监听多个队列
         container.setConcurrentConsumers(1);// ·当前 消费者数量
         container.setMaxConcurrentConsumers(5);
         container.setDefaultRequeueRejected(false);// ·是否 重回队列
